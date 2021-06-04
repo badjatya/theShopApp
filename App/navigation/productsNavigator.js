@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -6,20 +7,24 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ProductsOverviewScreen from "../screens/shop/ProductsOverview/ProductsOverviewScreen";
 
 //TODO: Importing Colors
-// import Colors from "../constants/Colors";
+import Colors from "../constants/Colors";
 
 const productsStackNavigator = createStackNavigator();
 
 const ProductsStackNavigatorScreen = () => {
   return (
     <productsStackNavigator.Navigator
-      screenOptions={{ headerTitleAlign: "center" }}
-      //   headerMode="none"
+      screenOptions={{
+        headerTitleAlign: "center",
+        headerStyle: {
+          backgroundColor: Platform.OS === "android" ? Colors.primary : "",
+        },
+        headerTintColor: Platform.OS === "android" ? "#fff" : Colors.primary,
+      }}
     >
       <productsStackNavigator.Screen
-        name="Home"
+        name="All Products"
         component={ProductsOverviewScreen}
-        // options={{ headerShown: false }}
       />
       {/* <productsStackNavigator.Screen name="Options" component={Options} /> */}
     </productsStackNavigator.Navigator>

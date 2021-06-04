@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList, Text, StatusBar } from "react-native";
 
 // TODO: Importing Reducer
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ const ProductsOverviewScreen = () => {
   const products = useSelector((state) => state.products.availableProducts);
   return (
     <View>
+      <StatusBar barStyle="light-content" />
       <FlatList
         data={products}
         renderItem={(itemData) => <Text>{itemData.item.title}</Text>}
