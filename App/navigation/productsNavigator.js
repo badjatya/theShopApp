@@ -3,6 +3,9 @@ import { Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/UI/CustomHeaderButton/CustomHeaderButton";
+
 // TODO: Importing Screens
 import ProductsOverviewScreen from "../screens/shop/ProductsOverview/ProductsOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetail/ProductDetailScreen";
@@ -32,6 +35,17 @@ const ProductsStackNavigatorScreen = () => {
       <productsStackNavigator.Screen
         name="All Products"
         component={ProductsOverviewScreen}
+        options={{
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Cart"
+                iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+                onPress={() => alert("hell")}
+              />
+            </HeaderButtons>
+          ),
+        }}
       />
 
       <productsStackNavigator.Screen
