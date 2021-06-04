@@ -8,7 +8,14 @@ import {
   StyleSheet,
 } from "react-native";
 
+// TODO: Importing redux store
 import { useSelector } from "react-redux";
+
+// TODO: Importing Styles
+import styles from "./style";
+
+// TODO: Importing Colors
+import Colors from "../../../constants/Colors";
 
 const ProductDetailScreen = (props) => {
   // TODO => Getting Params from Navigation
@@ -29,20 +36,16 @@ const ProductDetailScreen = (props) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Add to Cart" onPress={() => alert("Added to Cart")} />
+        <Button
+          title="Add to Cart"
+          onPress={() => alert("Added to Cart")}
+          color={Colors.primary}
+        />
       </View>
       <Text style={styles.price}>₹ {selectedProduct.price.toFixed(2)}</Text>
       <Text style={styles.description}>{selectedProduct.description}</Text>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  imageContainer: {},
-  image: {},
-  buttonContainer: {},
-  price: {},
-  description: {},
-});
 
 export default ProductDetailScreen;
