@@ -1,5 +1,8 @@
 import React from "react";
-import { View, Button, Text, Image, StyleSheet } from "react-native";
+import { View, Button, Text, Image } from "react-native";
+
+// TODO: Importing Styles
+import styles from "./style";
 
 const ProductItem = (props) => {
   return (
@@ -18,15 +21,5 @@ const ProductItem = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  product: {},
-  imageContainer: {},
-  image: {},
-  detail: {},
-  title: {},
-  price: {},
-  buttonContainer: {},
-});
 
 export default ProductItem;
