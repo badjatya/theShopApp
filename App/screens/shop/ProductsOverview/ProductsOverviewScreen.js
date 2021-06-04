@@ -1,15 +1,18 @@
 import React from "react";
-import { Flatlist } from "react-native";
+import { View, Flatlist, Text } from "react-native";
 
 import { useSelector } from "react-redux";
 
 const ProductsOverviewScreen = () => {
   const products = useSelector((state) => state.products.availableProducts);
   return (
-    <Flatlist
-      data={products}
-      renderItem={(itemData) => <Text>{itemData.item.title}</Text>}
-    />
+    <View>
+      {/* <Flatlist
+        data={products}
+        renderItem={(itemData) => <Text>{itemData.item.title}</Text>}
+      /> */}
+      <Text>Hii</Text>
+    </View>
   );
 };
 
