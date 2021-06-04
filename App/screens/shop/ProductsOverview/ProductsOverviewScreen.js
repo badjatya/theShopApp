@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text, StatusBar } from "react-native";
+import { View, FlatList, StatusBar } from "react-native";
 
 // TODO: Importing Reducer
 import { useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 import Colors from "../../../constants/Colors";
 
 // TODO: Main Screen i.e ProductsOverviewScreen
-const ProductsOverviewScreen = () => {
+const ProductsOverviewScreen = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
   return (
     <View>
@@ -23,7 +23,12 @@ const ProductsOverviewScreen = () => {
             imageUrl={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
-            onViewDetail={() => alert("Details")}
+            onViewDetail={() =>
+              props.navigation.push("Product Details", {
+                productId: itemData.item.id,
+                productTitle: itemData.item.title,
+              })
+            }
             onAddToCart={() => alert("Added To Cart")}
           />
         )}

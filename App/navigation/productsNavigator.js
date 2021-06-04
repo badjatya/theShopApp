@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // TODO: Importing Screens
 import ProductsOverviewScreen from "../screens/shop/ProductsOverview/ProductsOverviewScreen";
+import ProductDetailScreen from "../screens/shop/ProductDetail/ProductDetailScreen";
 
 //TODO: Importing Colors
 import Colors from "../constants/Colors";
@@ -26,7 +27,14 @@ const ProductsStackNavigatorScreen = () => {
         name="All Products"
         component={ProductsOverviewScreen}
       />
-      {/* <productsStackNavigator.Screen name="Options" component={Options} /> */}
+
+      <productsStackNavigator.Screen
+        name="Product Details"
+        component={ProductDetailScreen}
+        options={({ navigation, route }) => ({
+          title: route.params.productTitle,
+        })}
+      />
     </productsStackNavigator.Navigator>
   );
 };
