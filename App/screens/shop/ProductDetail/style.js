@@ -16,10 +16,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     marginVertical: 20,
+    fontFamily: "open-sans-bold",
   },
   description: {
     marginHorizontal: 20,
     textAlign: "justify",
+    fontFamily: "open-sans",
   },
 });
 
