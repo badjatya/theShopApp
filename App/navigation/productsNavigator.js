@@ -12,6 +12,7 @@ import CustomHeaderButton from "../components/UI/CustomHeaderButton/CustomHeader
 // TODO: Importing Screens
 import ProductsOverviewScreen from "../screens/shop/ProductsOverview/ProductsOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetail/ProductDetailScreen";
+import CartScreen from "../screens/shop/Cart/CartScreen";
 
 // TODO: Importing Colors
 import Colors from "../constants/Colors";
@@ -39,17 +40,17 @@ const ProductsStackNavigatorScreen = () => {
       <productsStackNavigator.Screen
         name="All Products"
         component={ProductsOverviewScreen}
-        options={{
+        options={({ navigation }) => ({
           headerRight: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
               <Item
                 title="Cart"
                 iconName={Platform.OS === "android" ? "md-cart" : "ios-cart"}
-                onPress={() => alert("hell")}
+                onPress={() => navigation.push("Cart")}
               />
             </HeaderButtons>
           ),
-        }}
+        })}
       />
 
       <productsStackNavigator.Screen
@@ -59,6 +60,8 @@ const ProductsStackNavigatorScreen = () => {
           title: route.params.productTitle,
         })}
       />
+
+      <productsStackNavigator.Screen name="Cart" component={CartScreen} />
     </productsStackNavigator.Navigator>
   );
 };
