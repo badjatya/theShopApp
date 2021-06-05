@@ -1,11 +1,14 @@
 import React from "react";
 import { Platform } from "react-native";
 
+// TODO: Importing HeaderButtons and Ionicons Icon
 import { HeaderButton } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
 
+// TODO: Importing Colors
 import Colors from "../../../constants/Colors";
 
+// NOTE: Creating CustomHeaderButton Component
 const CustomHeaderButton = (props) => {
   return (
     <HeaderButton

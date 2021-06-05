@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  Image,
-  Button,
-  StyleSheet,
-} from "react-native";
+import { Text, View, ScrollView, Image, Button } from "react-native";
 
 // TODO: Importing redux store
 import { useSelector } from "react-redux";
@@ -17,6 +10,7 @@ import styles from "./style";
 // TODO: Importing Colors
 import Colors from "../../../constants/Colors";
 
+// NOTE ProductDetailScreen
 const ProductDetailScreen = (props) => {
   // TODO => Getting Params from Navigation
   const { navigation, route } = props;

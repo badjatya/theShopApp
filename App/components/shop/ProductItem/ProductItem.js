@@ -12,9 +12,10 @@ import {
 // TODO: Importing Styles
 import styles from "./style";
 
+// NOTE ProductItem Component
 const ProductItem = (props) => {
+  // Creating a Custom Variable to switch from TouchableNativeFeedback if platform is android
   let TouchableCmp = TouchableOpacity;
-
   if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }

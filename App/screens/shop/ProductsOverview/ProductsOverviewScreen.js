@@ -10,7 +10,7 @@ import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 //TODO: Importing Colors
 import Colors from "../../../constants/Colors";
 
-// TODO: Main Screen i.e ProductsOverviewScreen
+// NOTE: Main Screen i.e ProductsOverviewScreen
 const ProductsOverviewScreen = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
   return (
