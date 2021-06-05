@@ -1,11 +1,18 @@
 import React from "react";
 import { View, Text, FlatList, Button, StyleSheet } from "react-native";
+
+// TODO: Importing Redux
 import { useSelector } from "react-redux";
 
-import Colors from "../../../constants/Colors";
+// TODO: Importing Components
 import CartItem from "../../../components/shop/CartItem/CartItem";
 
+// TODO: Importing Colors
+import Colors from "../../../constants/Colors";
+
+// NOTE CartScreen
 const CartScreen = () => {
+  // Using data from state and converting Object to array so that we can use FlatList
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
@@ -21,12 +28,13 @@ const CartScreen = () => {
     return transformedCartItems;
   });
 
+  // Rendering CartScreen
   return (
     <View style={styles.screen}>
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{" "}
-          <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
+          <Text style={styles.amount}>₹ {cartTotalAmount.toFixed(2)}</Text>
         </Text>
         <Button
           color={Colors.accent}
@@ -34,6 +42,8 @@ const CartScreen = () => {
           disabled={cartItems.length === 0}
         />
       </View>
+
+      {/* Using CartItem component in FlatList */}
       <FlatList
         data={cartItems}
         keyExtractor={(item) => item.productId}

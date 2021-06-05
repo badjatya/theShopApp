@@ -6,8 +6,11 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
+
+// TODO: Importing Ionicons Icon
 import { Ionicons } from "@expo/vector-icons";
 
+// NOTE CartItem Component
 const CartItem = (props) => {
   return (
     <View style={styles.cartItem}>
@@ -16,7 +19,7 @@ const CartItem = (props) => {
         <Text style={styles.mainText}>{props.title}</Text>
       </View>
       <View style={styles.itemData}>
-        <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
+        <Text style={styles.mainText}>₹ {props.amount.toFixed(2)}</Text>
         <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
           <Ionicons
             name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
@@ -32,10 +35,11 @@ const CartItem = (props) => {
 const styles = StyleSheet.create({
   cartItem: {
     padding: 10,
+    paddingHorizontal: 15,
     backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 20,
+    marginHorizontal: 8,
   },
   itemData: {
     flexDirection: "row",
