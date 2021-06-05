@@ -11,10 +11,12 @@ import Navigation from "./App/navigation/productsNavigator";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import productReducer from "./App/store/reducers/product.reducer";
+import cartReducer from "./App/store/reducers/cart.reducer";
 
 // TODO: Combining reducer and creating redux store
 const rootReducer = combineReducers({
   products: productReducer,
+  cart: cartReducer,
 });
 const store = createStore(rootReducer);
 

@@ -2,7 +2,10 @@ import React from "react";
 import { View, FlatList, StatusBar } from "react-native";
 
 // TODO: Importing Reducer
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+// TODO: Importing actions
+import * as CartActions from "../../../store/actions/cart.action";
 
 // TODO: Importing Components
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
@@ -13,6 +16,7 @@ import Colors from "../../../constants/Colors";
 // NOTE: Main Screen i.e ProductsOverviewScreen
 const ProductsOverviewScreen = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
+  const dispatch = useDispatch();
   return (
     <View>
       <StatusBar barStyle="light-content" backgroundColor={Colors.primary} />
@@ -29,7 +33,7 @@ const ProductsOverviewScreen = (props) => {
                 productTitle: itemData.item.title,
               })
             }
-            onAddToCart={() => alert("Added To Cart")}
+            onAddToCart={() => dispatch(CartActions.addToCart(itemData.item))}
           />
         )}
       />

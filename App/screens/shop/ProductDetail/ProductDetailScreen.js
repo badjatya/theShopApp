@@ -2,7 +2,10 @@ import React from "react";
 import { Text, View, ScrollView, Image, Button } from "react-native";
 
 // TODO: Importing redux store
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+// TODO: Importing actions
+import * as CartActions from "../../../store/actions/cart.action";
 
 // TODO: Importing Styles
 import styles from "./style";
@@ -21,6 +24,8 @@ const ProductDetailScreen = (props) => {
     state.products.availableProducts.find((pro) => pro.id === product.productId)
   );
 
+  const dispatch = useDispatch();
+
   return (
     <ScrollView>
       <View style={styles.imageContainer}>
@@ -32,7 +37,7 @@ const ProductDetailScreen = (props) => {
       <View style={styles.buttonContainer}>
         <Button
           title="Add to Cart"
-          onPress={() => alert("Added to Cart")}
+          onPress={() => dispatch(CartActions.addToCart(selectedProduct))}
           color={Colors.primary}
         />
       </View>
