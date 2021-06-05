@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, FlatList, Button, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
-import Colors from "../../constants/Colors";
-import CartItem from "../../components/shop/CartItem";
+import Colors from "../../../constants/Colors";
+import CartItem from "../../../components/shop/CartItem/CartItem";
 
 const CartScreen = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
