@@ -19,7 +19,12 @@ const CartItem = (props) => {
         <Text style={styles.mainText}>{props.title}</Text>
       </View>
       <View style={styles.itemData}>
-        <Text style={styles.mainText}>₹ {props.amount.toFixed(2)}</Text>
+        <Text style={styles.mainText}>
+          ₹{" "}
+          {Math.round(
+            ((props.amount > 0 ? props.amount : 0) + Number.EPSILON) * 100
+          ) / 100}
+        </Text>
         <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
           <Ionicons
             name={Platform.OS === "android" ? "md-trash" : "ios-trash"}

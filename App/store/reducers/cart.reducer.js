@@ -44,24 +44,23 @@ const cartReducer = (state = initialState, action) => {
       const selectedCartItem = state.items[action.pid];
       const currentQty = selectedCartItem.quantity;
       let updatedCartItems;
-
       if (currentQty > 1) {
+        // need to reduce it, not erase it
         const updatedCartItem = new CartItem(
           selectedCartItem.quantity - 1,
-          selectedCartItem.prodPrice,
-          selectedCartItem.prodTitle,
-          selectedCartItem.sum - selectedCartItem.prodPrice
+          selectedCartItem.productPrice,
+          selectedCartItem.productTitle,
+          selectedCartItem.sum - selectedCartItem.productPrice
         );
-        updatedCartItems = { ...state, [action.pid]: updatedCartItem };
+        updatedCartItems = { ...state.items, [action.pid]: updatedCartItem };
       } else {
         updatedCartItems = { ...state.items };
         delete updatedCartItems[action.pid];
       }
-
       return {
         ...state,
         items: updatedCartItems,
-        totalAmount: state.totalAmount - selectedCartItem.prodPrice,
+        totalAmount: state.totalAmount - selectedCartItem.productPrice,
       };
   }
   return state;
