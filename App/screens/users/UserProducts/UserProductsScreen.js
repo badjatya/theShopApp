@@ -2,13 +2,16 @@ import React from "react";
 import { StyleSheet, Button, View, FlatList } from "react-native";
 
 // TODO: Importing redux store
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as productsActions from "../../../store/actions/product.action";
 
 // TODO: Importing Component
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 
 const UserProductsScreen = () => {
   const userProducts = useSelector((state) => state.products.userProducts);
+
+  const dispatch = useDispatch();
 
   return (
     <View>
@@ -23,7 +26,12 @@ const UserProductsScreen = () => {
           >
             <View style={styles.buttonContainer}>
               <Button title="Edit" onPress={() => alert("Edit")} />
-              <Button title="Delete" onPress={() => alert("delete")} />
+              <Button
+                title="Delete"
+                onPress={() =>
+                  dispatch(productsActions.deleteProduct(itemData.item.id))
+                }
+              />
             </View>
           </ProductItem>
         )}

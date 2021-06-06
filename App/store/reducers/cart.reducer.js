@@ -3,6 +3,7 @@ import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart.action";
 
 // TODO: Importing Actions for Orders
 import { ADD_ORDER } from "../actions/order.action";
+import { DELETE_PRODUCT } from "../actions/product.action";
 
 // TODO: Importing Models from Cart Model
 import CartItem from "../../models/Cart";
@@ -69,6 +70,22 @@ const cartReducer = (state = initialState, action) => {
     // NOTE clearing cart when order is placed
     case ADD_ORDER:
       return initialState;
+
+    // NOTE clearing cart if the user deletes the product
+    case DELETE_PRODUCT:
+      if (!state.items[action.pid]) {
+        return state;
+      }
+
+      const updatedItems = { ...state.items };
+      const itemTotal = state.items[action.pid].sum;
+      delete updatedItems[action.pid];
+
+      return {
+        ...state,
+        items: updatedItems,
+        totalAmount: state.totalAmount - itemTotal,
+      };
   }
   return state;
 };
