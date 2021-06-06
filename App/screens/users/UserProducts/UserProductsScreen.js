@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Button, View, FlatList } from "react-native";
 
 // TODO: Importing redux store
 import { useSelector } from "react-redux";
