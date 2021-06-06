@@ -137,7 +137,7 @@ const OrderDrawerNavigatorScreen = () => {
       />
 
       <orderDrawerNavigator.Screen
-        name="Add Product"
+        name="Admin"
         component={UserProductsStackNavigatorScreen}
         options={{
           drawerIcon: () => (

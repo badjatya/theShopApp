@@ -19,9 +19,13 @@ const UserProductsScreen = () => {
             imageUrl={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
-            onViewDetail={() => alert("View Detail")}
-            onAddToCart={() => alert("Item Added")}
-          />
+            onSelect={() => alert("View Detail")}
+          >
+            <View style={styles.buttonContainer}>
+              <Button title="Edit" onPress={() => alert("Edit")} />
+              <Button title="Delete" onPress={() => alert("delete")} />
+            </View>
+          </ProductItem>
         )}
       />
     </View>
@@ -30,4 +34,12 @@ const UserProductsScreen = () => {
 
 export default UserProductsScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "25%",
+    paddingHorizontal: 20,
+  },
+});
