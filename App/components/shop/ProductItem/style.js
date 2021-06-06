@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     borderRadius: 10,
+    backgroundColor: "#fff",
     height: 300,
     margin: 20,
-    backgroundColor: "#fff",
   },
   touchable: { borderRadius: 10, overflow: "hidden" },
   imageContainer: {
