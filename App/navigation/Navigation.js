@@ -1,13 +1,13 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import ProductsStackNavigatorScreen from "./productsNavigator";
+import OrderDrawerNavigatorScreen from "./sideDrawerNavigation";
 
 // NOTE NavigationContainer
 export default () => {
   return (
     <NavigationContainer>
-      <ProductsStackNavigatorScreen />
+      <OrderDrawerNavigatorScreen />
     </NavigationContainer>
   );
 };
