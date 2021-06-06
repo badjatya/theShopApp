@@ -13,6 +13,10 @@ import ProductsStackNavigatorScreen from "./productsNavigator";
 // TODO: Importing Screens
 import OrdersScreen from "../screens/shop/Orders/OrdersScreen";
 
+// TODO: Importing CustomHeaderButton for HeaderIcon
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/UI/CustomHeaderButton/CustomHeaderButton";
+
 // TODO: Importing Colors
 import Colors from "../constants/Colors";
 
@@ -36,7 +40,21 @@ const OrderStackNavigatorScreen = () => {
         headerTintColor: Platform.OS === "android" ? "#fff" : Colors.primary,
       }}
     >
-      <orderStackNavigator.Screen name="Orders" component={OrdersScreen} />
+      <orderStackNavigator.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Menu"
+                iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
+                onPress={() => navigation.toggleDrawer()}
+              />
+            </HeaderButtons>
+          ),
+        })}
+      />
     </orderStackNavigator.Navigator>
   );
 };
