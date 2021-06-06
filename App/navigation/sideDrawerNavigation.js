@@ -12,6 +12,7 @@ import ProductsStackNavigatorScreen from "./productsNavigator";
 
 // TODO: Importing Screens
 import OrdersScreen from "../screens/shop/Orders/OrdersScreen";
+import UserProductsScreen from "../screens/users/UserProducts/UserProductsScreen";
 
 // TODO: Importing CustomHeaderButton for HeaderIcon
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -24,7 +25,7 @@ import { Ionicons } from "@expo/vector-icons";
 // TODO: Importing Colors
 import Colors from "../constants/Colors";
 
-// NOTE Creating Stack Navigator
+// NOTE Creating Stack Navigator for OrderScreen
 const orderStackNavigator = createStackNavigator();
 
 const OrderStackNavigatorScreen = () => {
@@ -63,6 +64,45 @@ const OrderStackNavigatorScreen = () => {
   );
 };
 
+// NOTE Creating Stack Navigator for OrderScreen
+const userProductsStackNavigator = createStackNavigator();
+
+const UserProductsStackNavigatorScreen = () => {
+  return (
+    <userProductsStackNavigator.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+        headerStyle: {
+          backgroundColor: Platform.OS === "android" ? Colors.primary : "",
+        },
+        headerTitleStyle: {
+          fontFamily: "open-sans-bold",
+        },
+        headerBackTitleStyle: {
+          fontFamily: "open-sans",
+        },
+        headerTintColor: Platform.OS === "android" ? "#fff" : Colors.primary,
+      }}
+    >
+      <userProductsStackNavigator.Screen
+        name="User Product"
+        component={UserProductsScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Menu"
+                iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
+                onPress={() => navigation.toggleDrawer()}
+              />
+            </HeaderButtons>
+          ),
+        })}
+      />
+    </userProductsStackNavigator.Navigator>
+  );
+};
+
 // NOTE Creating Drawer Navigator
 const orderDrawerNavigator = createDrawerNavigator();
 
@@ -85,6 +125,20 @@ const OrderDrawerNavigatorScreen = () => {
       <orderDrawerNavigator.Screen
         name="Orders"
         component={OrderStackNavigatorScreen}
+        options={{
+          drawerIcon: () => (
+            <Ionicons
+              name={Platform.OS === "android" ? "md-list" : "ios-list"}
+              size={24}
+              color={Colors.primary}
+            />
+          ),
+        }}
+      />
+
+      <orderDrawerNavigator.Screen
+        name="Add Product"
+        component={UserProductsStackNavigatorScreen}
         options={{
           drawerIcon: () => (
             <Ionicons

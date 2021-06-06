@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 
 // TODO: Importing Component
-import ProductItem from "../../../components/shop/ProductItem";
+import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 
 const UserProductsScreen = () => {
   const userProducts = useSelector((state) => state.products.userProducts);
