@@ -17,6 +17,10 @@ import OrdersScreen from "../screens/shop/Orders/OrdersScreen";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/UI/CustomHeaderButton/CustomHeaderButton";
 
+// TODO: Importing Icons
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+
 // TODO: Importing Colors
 import Colors from "../constants/Colors";
 
@@ -68,10 +72,28 @@ const OrderDrawerNavigatorScreen = () => {
       <orderDrawerNavigator.Screen
         name="Products"
         component={ProductsStackNavigatorScreen}
+        options={{
+          drawerIcon: (drawer) => (
+            <Ionicons
+              name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+              size={24}
+              color={Colors.primary}
+            />
+          ),
+        }}
       />
       <orderDrawerNavigator.Screen
         name="Orders"
         component={OrderStackNavigatorScreen}
+        options={{
+          drawerIcon: () => (
+            <Ionicons
+              name={Platform.OS === "android" ? "md-list" : "ios-list"}
+              size={24}
+              color={Colors.primary}
+            />
+          ),
+        }}
       />
     </orderDrawerNavigator.Navigator>
   );
