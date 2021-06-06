@@ -2,7 +2,7 @@ import React from "react";
 import { Platform } from "react-native";
 
 // TODO: Importing Navigation Container and CreateStackNavigator
-import { NavigationContainer } from "@react-navigation/native";
+
 import { createStackNavigator } from "@react-navigation/stack";
 
 // TODO: Importing CustomHeaderButton for HeaderIcon
@@ -66,11 +66,4 @@ const ProductsStackNavigatorScreen = () => {
   );
 };
 
-// NOTE NavigationContainer
-export default () => {
-  return (
-    <NavigationContainer>
-      <ProductsStackNavigatorScreen />
-    </NavigationContainer>
-  );
-};
+export default ProductsStackNavigatorScreen;

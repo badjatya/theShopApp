@@ -5,7 +5,7 @@ import * as Fonts from "expo-font";
 import AppLoading from "expo-app-loading";
 
 // TODO: Importing Navigation
-import Navigation from "./App/navigation/productsNavigator";
+import Navigation from "./App/navigation/Navigation";
 
 // TODO: importing Reducers
 import { createStore, combineReducers } from "redux";
@@ -18,7 +18,7 @@ import ordersReducer from "./App/store/reducers/order.reducer";
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
-  order: ordersReducer,
+  // order: ordersReducer,
 });
 const store = createStore(rootReducer);
 
