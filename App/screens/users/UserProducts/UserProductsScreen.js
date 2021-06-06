@@ -23,14 +23,18 @@ const UserProductsScreen = (props) => {
             imageUrl={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
-            onSelect={() => alert("View Detail")}
+            onSelect={() =>
+              navigation.push("Edit Product", {
+                productId: itemData.item.id,
+              })
+            }
           >
             <View style={styles.buttonContainer}>
               <Button
                 title="Edit"
                 onPress={() =>
                   navigation.push("Edit Product", {
-                    id: itemData.item.id,
+                    productId: itemData.item.id,
                   })
                 }
               />
