@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, StatusBar } from "react-native";
+import { View, FlatList, StatusBar, Button } from "react-native";
 
 // TODO: Importing Reducer
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +9,9 @@ import * as CartActions from "../../../store/actions/cart.action";
 
 // TODO: Importing Components
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
+
+// TODO: Importing styles
+import styles from "./style";
 
 //TODO: Importing Colors
 import Colors from "../../../constants/Colors";
@@ -27,14 +30,29 @@ const ProductsOverviewScreen = (props) => {
             imageUrl={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
-            onViewDetail={() =>
+            onSelect={() =>
               props.navigation.push("Product Details", {
                 productId: itemData.item.id,
                 productTitle: itemData.item.title,
               })
             }
-            onAddToCart={() => dispatch(CartActions.addToCart(itemData.item))}
-          />
+          >
+            <View style={styles.buttonContainer}>
+              <Button
+                title="View Detail"
+                onPress={() =>
+                  props.navigation.push("Product Details", {
+                    productId: itemData.item.id,
+                    productTitle: itemData.item.title,
+                  })
+                }
+              />
+              <Button
+                title="Add To Cart"
+                onPress={() => dispatch(CartActions.addToCart(itemData.item))}
+              />
+            </View>
+          </ProductItem>
         )}
       />
     </View>
