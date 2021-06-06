@@ -1,6 +1,9 @@
 // TODO: Importing Actions for Cart
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart.action";
 
+// TODO: Importing Actions for Orders
+import { ADD_ORDER } from "../actions/order.action";
+
 // TODO: Importing Models from Cart Model
 import CartItem from "../../models/Cart";
 
@@ -62,6 +65,10 @@ const cartReducer = (state = initialState, action) => {
         items: updatedCartItems,
         totalAmount: state.totalAmount - selectedCartItem.productPrice,
       };
+
+    // NOTE clearing cart when order is placed
+    case ADD_ORDER:
+      return initialState;
   }
   return state;
 };
