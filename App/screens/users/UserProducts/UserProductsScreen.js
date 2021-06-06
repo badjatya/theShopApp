@@ -8,7 +8,8 @@ import * as productsActions from "../../../store/actions/product.action";
 // TODO: Importing Component
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 
-const UserProductsScreen = () => {
+const UserProductsScreen = (props) => {
+  const { navigation } = props;
   const userProducts = useSelector((state) => state.products.userProducts);
 
   const dispatch = useDispatch();
@@ -25,7 +26,14 @@ const UserProductsScreen = () => {
             onSelect={() => alert("View Detail")}
           >
             <View style={styles.buttonContainer}>
-              <Button title="Edit" onPress={() => alert("Edit")} />
+              <Button
+                title="Edit"
+                onPress={() =>
+                  navigation.push("Edit Product", {
+                    id: itemData.item.id,
+                  })
+                }
+              />
               <Button
                 title="Delete"
                 onPress={() =>

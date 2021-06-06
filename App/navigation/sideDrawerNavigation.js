@@ -13,13 +13,14 @@ import ProductsStackNavigatorScreen from "./productsNavigator";
 // TODO: Importing Screens
 import OrdersScreen from "../screens/shop/Orders/OrdersScreen";
 import UserProductsScreen from "../screens/users/UserProducts/UserProductsScreen";
+import EditProductScreen from "../screens/users/EditProduct/EditProductScreen";
 
 // TODO: Importing CustomHeaderButton for HeaderIcon
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/UI/CustomHeaderButton/CustomHeaderButton";
 
 // TODO: Importing Icons
-import { AntDesign } from "@expo/vector-icons";
+
 import { Ionicons } from "@expo/vector-icons";
 
 // TODO: Importing Colors
@@ -85,7 +86,7 @@ const UserProductsStackNavigatorScreen = () => {
       }}
     >
       <userProductsStackNavigator.Screen
-        name="User Product"
+        name="Your Product"
         component={UserProductsScreen}
         options={({ navigation }) => ({
           headerLeft: () => (
@@ -97,7 +98,23 @@ const UserProductsStackNavigatorScreen = () => {
               />
             </HeaderButtons>
           ),
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Add"
+                iconName={
+                  Platform.OS === "android" ? "md-create" : "ios-create"
+                }
+                onPress={() => navigation.push("Edit Product")}
+              />
+            </HeaderButtons>
+          ),
         })}
+      />
+
+      <userProductsStackNavigator.Screen
+        name="Edit Product"
+        component={EditProductScreen}
       />
     </userProductsStackNavigator.Navigator>
   );
@@ -113,7 +130,7 @@ const OrderDrawerNavigatorScreen = () => {
         name="Products"
         component={ProductsStackNavigatorScreen}
         options={{
-          drawerIcon: (drawer) => (
+          drawerIcon: () => (
             <Ionicons
               name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
               size={24}
