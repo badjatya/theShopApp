@@ -122,17 +122,6 @@ const UserProductsStackNavigatorScreen = () => {
         options={({ navigation, route }) => ({
           headerTitle:
             route.params.productId === "null" ? "Add Product" : "Edit Product",
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-              <Item
-                title="Save"
-                iconName={
-                  Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
-                }
-                onPress={() => route.params.submit}
-              />
-            </HeaderButtons>
-          ),
         })}
       />
     </userProductsStackNavigator.Navigator>

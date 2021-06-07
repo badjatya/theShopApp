@@ -1,8 +1,13 @@
-import React, { useState, useLayoutEffect, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
 
 // TODO: Importing redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as productsActions from "../../../store/actions/product.action";
+
+// TODO: Importing CustomHeaderButton for HeaderIcon
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../../components/UI/CustomHeaderButton/CustomHeaderButton";
 
 const EditProductScreen = (props) => {
   // NOTE Params and navigation
@@ -13,6 +18,9 @@ const EditProductScreen = (props) => {
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === prodId)
   );
+
+  // Dispatching
+  const dispatch = useDispatch();
 
   // STATE
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : "");
@@ -26,13 +34,33 @@ const EditProductScreen = (props) => {
 
   // Note for submitting the edited products
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    const submitHandler = () => {
+      if (editedProduct) {
+        dispatch(
+          productsActions.updateProduct(prodId, title, description, imageUrl)
+        );
+      } else {
+        dispatch(
+          productsActions.createProduct(title, description, imageUrl, +price)
+        );
+      }
+    };
+
     navigation.setOptions({
-      submit: function submit() {
-        console.log("GOD");
-      },
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="Save"
+            iconName={
+              Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
+            }
+            onPress={submitHandler}
+          />
+        </HeaderButtons>
+      ),
     });
-  }, []);
+  }, [navigation, dispatch, prodId, title, description, imageUrl, price]);
 
   return (
     <ScrollView>

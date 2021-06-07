@@ -26,7 +26,10 @@ const ProductItem = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{ uri: props.imageUrl }} />
+              <Image
+                style={styles.image}
+                source={props.imageUrl ? { uri: props.imageUrl } : null}
+              />
             </View>
             <View style={styles.detail}>
               <Text style={styles.title}>{props.title}</Text>
