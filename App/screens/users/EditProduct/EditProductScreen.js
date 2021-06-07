@@ -45,6 +45,8 @@ const EditProductScreen = (props) => {
           productsActions.createProduct(title, description, imageUrl, +price)
         );
       }
+
+      navigation.goBack();
     };
 
     navigation.setOptions({
