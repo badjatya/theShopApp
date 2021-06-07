@@ -105,7 +105,11 @@ const UserProductsStackNavigatorScreen = () => {
                 iconName={
                   Platform.OS === "android" ? "md-create" : "ios-create"
                 }
-                onPress={() => navigation.push("Edit Product")}
+                onPress={() =>
+                  navigation.push("Edit Product", {
+                    productId: "null",
+                  })
+                }
               />
             </HeaderButtons>
           ),
@@ -115,6 +119,21 @@ const UserProductsStackNavigatorScreen = () => {
       <userProductsStackNavigator.Screen
         name="Edit Product"
         component={EditProductScreen}
+        options={({ navigation, route }) => ({
+          headerTitle:
+            route.params.productId === "null" ? "Add Product" : "Edit Product",
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+              <Item
+                title="Save"
+                iconName={
+                  Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
+                }
+                onPress={() => route.params.submit}
+              />
+            </HeaderButtons>
+          ),
+        })}
       />
     </userProductsStackNavigator.Navigator>
   );
