@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Button, View, FlatList } from "react-native";
+import { StyleSheet, Button, View, FlatList, Alert } from "react-native";
 
 // TODO: Importing redux store
 import { useSelector, useDispatch } from "react-redux";
@@ -9,10 +9,24 @@ import * as productsActions from "../../../store/actions/product.action";
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 
 const UserProductsScreen = (props) => {
+  // Navigation
   const { navigation } = props;
-  const userProducts = useSelector((state) => state.products.userProducts);
 
+  // Importing data from redux store state
+  const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
+
+  // delete products function
+  const deleteProductHandler = (id) => {
+    Alert.alert("Are You Sure?", "You want to delete this item?", [
+      { text: "No", style: "default" },
+      {
+        text: "Yes",
+        style: "destructive",
+        onPress: () => dispatch(productsActions.deleteProduct(id)),
+      },
+    ]);
+  };
 
   return (
     <View>
@@ -40,9 +54,7 @@ const UserProductsScreen = (props) => {
               />
               <Button
                 title="Delete"
-                onPress={() =>
-                  dispatch(productsActions.deleteProduct(itemData.item.id))
-                }
+                onPress={() => deleteProductHandler(itemData.item.id)}
               />
             </View>
           </ProductItem>
