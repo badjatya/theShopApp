@@ -167,7 +167,7 @@ const OrderDrawerNavigatorScreen = () => {
         options={{
           drawerIcon: () => (
             <Ionicons
-              name={Platform.OS === "android" ? "md-create" : "ios-list"}
+              name={Platform.OS === "android" ? "md-create" : "ios-create"}
               size={24}
               color={Colors.primary}
             />
