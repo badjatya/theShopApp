@@ -71,6 +71,7 @@ const EditProductScreen = (props) => {
           <Text style={styles.label}>Title</Text>
           <TextInput
             style={styles.textInput}
+            autoCapitalize="sentences"
             value={title}
             onChangeText={(changedValue) => setTitle(changedValue)}
           />
