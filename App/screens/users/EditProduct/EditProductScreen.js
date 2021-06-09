@@ -72,6 +72,7 @@ const EditProductScreen = (props) => {
           <TextInput
             style={styles.textInput}
             autoCapitalize="sentences"
+            autoCorrect
             value={title}
             onChangeText={(changedValue) => setTitle(changedValue)}
           />
