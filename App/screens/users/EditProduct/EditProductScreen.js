@@ -103,6 +103,7 @@ const EditProductScreen = (props) => {
           <Text style={styles.label}>Description</Text>
           <TextInput
             style={styles.textInput}
+            autoCorrect
             value={description}
             onChangeText={(changedValue) => setDescription(changedValue)}
           />
