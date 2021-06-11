@@ -12,7 +12,7 @@ const UserProductsScreen = (props) => {
   // Navigation
   const { navigation } = props;
 
-  // Importing data from redux store state
+  // TODO:  Importing data from redux store state
   const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 
