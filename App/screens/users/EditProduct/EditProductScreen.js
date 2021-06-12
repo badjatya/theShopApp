@@ -1,5 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TextInput,
+  Alert,
+} from "react-native";
 
 // TODO: Importing redux
 import { useSelector, useDispatch } from "react-redux";
@@ -24,6 +31,7 @@ const EditProductScreen = (props) => {
 
   // STATE
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : "");
+  const [titleIsValid, setTitleIsValid] = useState(false);
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ""
   );
@@ -36,6 +44,12 @@ const EditProductScreen = (props) => {
 
   useEffect(() => {
     const submitHandler = () => {
+      if (!titleIsValid) {
+        Alert.alert("Wrong Input", "Please check details you entered", [
+          { text: "Okay" },
+        ]);
+        return;
+      }
       if (editedProduct) {
         dispatch(
           productsActions.updateProduct(prodId, title, description, imageUrl)
@@ -64,6 +78,15 @@ const EditProductScreen = (props) => {
     });
   }, [navigation, dispatch, prodId, title, description, imageUrl, price]);
 
+  const titleChangeHandler = (text) => {
+    if (!text.trim().length === 0) {
+      setTitleIsValid(false);
+    } else {
+      setTitleIsValid(true);
+    }
+    setTitle(text);
+  };
+
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -74,9 +97,10 @@ const EditProductScreen = (props) => {
             autoCapitalize="sentences"
             autoCorrect
             value={title}
-            onChangeText={(changedValue) => setTitle(changedValue)}
+            onChangeText={titleChangeHandler}
           />
         </View>
+        {!titleIsValid && <Text>Please enter a valid Title!</Text>}
 
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
