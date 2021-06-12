@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -123,52 +123,73 @@ const EditProductScreen = (props) => {
     });
   }, [navigation, dispatch, prodId, formState]);
 
-  const textChangeHandler = (inputIdentifier, text) => {
-    let isValid = false;
-    if (text.trim().length > 0) {
-      isValid = true;
-    }
-    dispatchFormState({
-      type: FORM_INPUT_UPDATE,
-      value: text,
-      isValid: isValid,
-      input: inputIdentifier,
-    });
-  };
+  const inputChangeHandler = useCallback(
+    (inputIdentifier, inputValue, inputValidity) => {
+      dispatchFormState({
+        type: FORM_INPUT_UPDATE,
+        value: inputValue,
+        isValid: inputValidity,
+        input: inputIdentifier,
+      });
+    },
+    [dispatchFormState]
+  );
 
   return (
     <ScrollView>
       <View style={styles.form}>
         <Input
           label="Title"
+          id="title"
           errorText="Please enter a valid title!"
+          onInputChange={inputChangeHandler}
           autoCapitalize="sentences"
           autoCorrect
           returnKeyType="next"
+          initialValue={editedProduct ? editedProduct.title : ""}
+          initiallyValid={!!editedProduct}
+          required
         />
 
         <Input
           label="Image URL"
+          id="imageUrl"
           errorText="Please enter a valid image URL!"
+          onInputChange={inputChangeHandler}
           returnKeyType="next"
+          initialValue={editedProduct ? editedProduct.imageUrl : ""}
+          initiallyValid={!!editedProduct}
+          required
         />
 
         {editedProduct ? null : (
           <Input
             label="Price"
+            id="price"
             errorText="Please enter a valid price!"
+            onInputChange={inputChangeHandler}
             keyboardType="decimal-pad"
             returnKeyType="next"
+            initialValue={editedProduct ? editedProduct.price : ""}
+            initiallyValid={!!editedProduct}
+            required
+            min={0.1}
           />
         )}
 
         <Input
           label="Description"
+          id="description"
           errorText="Please enter a valid description!"
+          onInputChange={inputChangeHandler}
           autoCapitalize="sentences"
           autoCorrect
           multiline
           numberOfLines={3}
+          initialValue={editedProduct ? editedProduct.description : ""}
+          initiallyValid={!!editedProduct}
+          required
+          minLength={5}
         />
       </View>
     </ScrollView>
