@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,14 @@ import * as productsActions from "../../../store/actions/product.action";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../../components/UI/CustomHeaderButton/CustomHeaderButton";
 
+// Form Reducer
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+  }
+};
+
 const EditProductScreen = (props) => {
   // NOTE Params and navigation
   const { navigation, route } = props;
@@ -29,16 +37,22 @@ const EditProductScreen = (props) => {
   // Dispatching
   const dispatch = useDispatch();
 
-  // STATE
-  const [title, setTitle] = useState(editedProduct ? editedProduct.title : "");
-  const [titleIsValid, setTitleIsValid] = useState(false);
-  const [imageUrl, setImageUrl] = useState(
-    editedProduct ? editedProduct.imageUrl : ""
-  );
-  const [price, setPrice] = useState(editedProduct ? editedProduct.price : "");
-  const [description, setDescription] = useState(
-    editedProduct ? editedProduct.description : ""
-  );
+  // Creating a state to hold all state, useReducer hook takes two para function and a initial state
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: {
+      title: editedProduct ? editedProduct.title : "",
+      imageUrl: editedProduct ? editedProduct.imageUrl : "",
+      description: editedProduct ? editedProduct.description : "",
+      price: editedProduct ? editedProduct.price : "",
+    },
+    inputValidities: {
+      title: editedProduct ? true : false,
+      imageUrl: editedProduct ? true : false,
+      description: editedProduct ? true : false,
+      price: editedProduct ? true : false,
+    },
+    formIsValid: editedProduct ? true : false,
+  });
 
   // Note for submitting the edited products
 
@@ -79,12 +93,16 @@ const EditProductScreen = (props) => {
   }, [navigation, dispatch, prodId, title, description, imageUrl, price]);
 
   const titleChangeHandler = (text) => {
-    if (!text.trim().length === 0) {
-      setTitleIsValid(false);
-    } else {
-      setTitleIsValid(true);
+    let isValid = false;
+    if (text.trim().length > 0) {
+      isValid = true;
     }
-    setTitle(text);
+    dispatchFormState({
+      type: FORM_INPUT_UPDATE,
+      value: text,
+      isValid: isValid,
+      input: "title",
+    });
   };
 
   return (
