@@ -21,7 +21,25 @@ const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value,
+    };
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid,
+    };
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+    }
+    return {
+      formIsValid: updatedFormIsValid,
+      inputValidities: updatedValidities,
+      inputValues: updatedValues,
+    };
   }
+  return state;
 };
 
 const EditProductScreen = (props) => {
@@ -58,7 +76,7 @@ const EditProductScreen = (props) => {
 
   useEffect(() => {
     const submitHandler = () => {
-      if (!titleIsValid) {
+      if (!formState.formIsValid) {
         Alert.alert("Wrong Input", "Please check details you entered", [
           { text: "Okay" },
         ]);
@@ -66,11 +84,21 @@ const EditProductScreen = (props) => {
       }
       if (editedProduct) {
         dispatch(
-          productsActions.updateProduct(prodId, title, description, imageUrl)
+          productsActions.updateProduct(
+            prodId,
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl
+          )
         );
       } else {
         dispatch(
-          productsActions.createProduct(title, description, imageUrl, +price)
+          productsActions.createProduct(
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            +formState.inputValues.price
+          )
         );
       }
 
@@ -90,9 +118,9 @@ const EditProductScreen = (props) => {
         </HeaderButtons>
       ),
     });
-  }, [navigation, dispatch, prodId, title, description, imageUrl, price]);
+  }, [navigation, dispatch, prodId, formState]);
 
-  const titleChangeHandler = (text) => {
+  const textChangeHandler = (inputIdentifier, text) => {
     let isValid = false;
     if (text.trim().length > 0) {
       isValid = true;
@@ -101,7 +129,7 @@ const EditProductScreen = (props) => {
       type: FORM_INPUT_UPDATE,
       value: text,
       isValid: isValid,
-      input: "title",
+      input: inputIdentifier,
     });
   };
 
@@ -114,18 +142,20 @@ const EditProductScreen = (props) => {
             style={styles.textInput}
             autoCapitalize="sentences"
             autoCorrect
-            value={title}
-            onChangeText={titleChangeHandler}
+            value={formState.inputValues.title}
+            onChangeText={textChangeHandler.bind(this, "title")}
           />
         </View>
-        {!titleIsValid && <Text>Please enter a valid Title!</Text>}
+        {!formState.inputValidities.title && (
+          <Text>Please enter a valid Title!</Text>
+        )}
 
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
           <TextInput
             style={styles.textInput}
-            value={imageUrl}
-            onChangeText={(changedValue) => setImageUrl(changedValue)}
+            value={formState.inputValues.imageUrl}
+            onChangeText={textChangeHandler.bind(this, "imageUrl")}
           />
         </View>
 
@@ -135,8 +165,8 @@ const EditProductScreen = (props) => {
             <TextInput
               style={styles.textInput}
               keyboardType="numeric"
-              value={price.toString()}
-              onChangeText={(changedValue) => setPrice(changedValue)}
+              value={formState.inputValues.price.toString()}
+              onChangeText={textChangeHandler.bind(this, "price")}
             />
           </View>
         )}
@@ -146,8 +176,8 @@ const EditProductScreen = (props) => {
           <TextInput
             style={styles.textInput}
             autoCorrect
-            value={description}
-            onChangeText={(changedValue) => setDescription(changedValue)}
+            value={formState.inputValues.description}
+            onChangeText={textChangeHandler.bind(this, "description")}
           />
         </View>
       </View>
