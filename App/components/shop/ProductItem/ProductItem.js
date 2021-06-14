@@ -33,7 +33,7 @@ const ProductItem = (props) => {
             </View>
             <View style={styles.detail}>
               <Text style={styles.title}>{props.title}</Text>
-              <Text style={styles.price}>₹ {props.price.toFixed(2)}</Text>
+              <Text style={styles.price}>₹ {props.price}</Text>
             </View>
             {props.children}
           </View>

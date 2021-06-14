@@ -1,43 +1,39 @@
 import React from "react";
 import { Platform } from "react-native";
 
-// TODO: Importing Navigation Container and CreateStackNavigator
-
+// TODO: Importing StackNavigator from react navigation
 import { createStackNavigator } from "@react-navigation/stack";
 
-// TODO: Importing CustomHeaderButton for HeaderIcon
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import CustomHeaderButton from "../components/UI/CustomHeaderButton/CustomHeaderButton";
-
 // TODO: Importing Screens
-import ProductsOverviewScreen from "../screens/shop/ProductsOverview/ProductsOverviewScreen";
-import ProductDetailScreen from "../screens/shop/ProductDetail/ProductDetailScreen";
-import CartScreen from "../screens/shop/Cart/CartScreen";
+import ProductsOverviewScreen from "../../screens/shop/ProductsOverview/ProductsOverviewScreen";
+import ProductDetailScreen from "../../screens/shop/ProductDetail/ProductDetailScreen";
+import CartScreen from "../../screens/shop/Cart/CartScreen";
+
+// TODO: Importing HeaderButtons
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+
+// TODO: Importing Components
+import CustomHeaderButton from "../../components/UI/CustomHeaderButton/CustomHeaderButton";
 
 // TODO: Importing Colors
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors";
 
-// NOTE ProductStackNavigator
-const productsStackNavigator = createStackNavigator();
+// NOTE Creating ProductStackNavigator
+const ProductStackNavigator = createStackNavigator();
 
-const ProductsStackNavigatorScreen = () => {
+const ProductStackNavigatorScreen = () => {
   return (
-    <productsStackNavigator.Navigator
+    <ProductStackNavigator.Navigator
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: Platform.OS === "android" ? Colors.primary : "",
         },
-        headerTitleStyle: {
-          fontFamily: "open-sans-bold",
-        },
-        headerBackTitleStyle: {
-          fontFamily: "open-sans",
-        },
-        headerTintColor: Platform.OS === "android" ? "#fff" : Colors.primary,
+        headerTintColor:
+          Platform.OS === "android" ? Colors.white : Colors.primary,
       }}
     >
-      <productsStackNavigator.Screen
+      <ProductStackNavigator.Screen
         name="All Products"
         component={ProductsOverviewScreen}
         options={({ navigation }) => ({
@@ -62,17 +58,23 @@ const ProductsStackNavigatorScreen = () => {
         })}
       />
 
-      <productsStackNavigator.Screen
+      <ProductStackNavigator.Screen
         name="Product Details"
         component={ProductDetailScreen}
-        options={({ navigation, route }) => ({
+        options={({ route }) => ({
           title: route.params.productTitle,
         })}
       />
 
-      <productsStackNavigator.Screen name="Cart" component={CartScreen} />
-    </productsStackNavigator.Navigator>
+      <ProductStackNavigator.Screen
+        name="Cart"
+        component={CartScreen}
+        // options={({ route }) => ({
+        //   title: route.params.productTitle,
+        // })}
+      />
+    </ProductStackNavigator.Navigator>
   );
 };
 
-export default ProductsStackNavigatorScreen;
+export default ProductStackNavigatorScreen;

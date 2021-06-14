@@ -8,7 +8,7 @@ import CustomButton from "../../UI/CustomButton/CustomButton";
 // TODO: Importing Colors
 import Colors from "../../../constants/Colors";
 
-const CartItem = (props) => {
+const OrderItemList = (props) => {
   return (
     <View>
       {props.imageUrl && (
@@ -26,7 +26,6 @@ const CartItem = (props) => {
               <Text style={styles.quantity}>{props.quantity}</Text>
               <Text style={styles.amount}>₹ {props.amount}</Text>
             </View>
-            <CustomButton title="Delete" onClick={props.onRemove} />
           </View>
         </Card>
       )}
@@ -34,17 +33,15 @@ const CartItem = (props) => {
   );
 };
 
-export default CartItem;
+export default OrderItemList;
 
 const styles = StyleSheet.create({
   card: {
-    margin: 20,
     marginVertical: 10,
     padding: 10,
   },
   cardItems: {
     flexDirection: "row",
-    justifyContent: "space-between",
   },
   imageContainer: {
     width: "25%",
@@ -56,6 +53,7 @@ const styles = StyleSheet.create({
   },
   detailContainer: {
     marginVertical: 2,
+    marginLeft: 25,
   },
   title: {
     fontFamily: "open-sans-bold",

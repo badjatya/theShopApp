@@ -1,13 +1,19 @@
 import React from "react";
+
+// TODO: Importing NavigationContainer from react-navigation
 import { NavigationContainer } from "@react-navigation/native";
 
-import OrderDrawerNavigatorScreen from "./sideDrawerNavigation";
+// TODO: Importing Top Navigation Screen
+import DrawerNavigatorScreen from "./DrawerNavigation/drawerNavigation";
 
-// NOTE NavigationContainer
-export default () => {
+// Creating Navigation Container
+
+const Navigation = () => {
   return (
     <NavigationContainer>
-      <OrderDrawerNavigatorScreen />
+      <DrawerNavigatorScreen />
     </NavigationContainer>
   );
 };
+
+export default Navigation;

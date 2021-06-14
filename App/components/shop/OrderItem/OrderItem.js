@@ -1,72 +1,68 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
+// TODO: Importing components
+import Card from "../../UI/Card/Card";
+import CustomButton from "../../UI/CustomButton/CustomButton";
+import OrderItemList from "../../shop/OrderItemList/OrderItemList";
 
 // TODO: Importing Colors
 import Colors from "../../../constants/Colors";
 
-// TODO: Importing Components
-import CartItem from "../CartItem/CartItem";
-
-export default function OrderItem(props) {
+const OrderItem = (props) => {
   const [showDetails, setShowDetails] = useState(false);
-
   return (
-    <View style={styles.orderItem}>
-      <View style={styles.summary}>
-        <Text style={styles.totalAmount}>₹ {props.amount}</Text>
-        <Text style={styles.date}>{props.date}</Text>
-      </View>
-      <Button
-        color={Colors.primary}
-        title={showDetails ? "Hide Details" : "Show Details"}
-        onPress={() => setShowDetails((initialValue) => !initialValue)}
-      />
-
-      {showDetails && (
-        <View style={styles.detailItems}>
-          {props.items.map((cartItem) => (
-            <CartItem
-              key={cartItem.productId}
-              quantity={cartItem.quantity}
-              amount={cartItem.sum}
-              title={cartItem.productTitle}
-            />
-          ))}
+    <View>
+      <Card style={styles.card}>
+        <View style={styles.orderSummaryContainer}>
+          <Text style={styles.price}>₹ {props.totalAmount}</Text>
+          <Text style={styles.date}>{props.readableDate}</Text>
         </View>
-      )}
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            title={showDetails ? "Hide Details" : "Show Details"}
+            onClick={() => setShowDetails((initialValue) => !initialValue)}
+          />
+          {showDetails && (
+            <View style={styles.detailItems}>
+              {props.items.map((cartItem) => (
+                <OrderItemList
+                  key={cartItem.productId}
+                  imageUrl={cartItem.productImageUrl}
+                  quantity={cartItem.quantity}
+                  amount={cartItem.sum}
+                  title={cartItem.productTitle}
+                />
+              ))}
+            </View>
+          )}
+        </View>
+      </Card>
     </View>
   );
-}
+};
+
+export default OrderItem;
 
 const styles = StyleSheet.create({
-  orderItem: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "#fff",
+  card: {
     margin: 20,
     padding: 10,
-    alignItems: "center",
   },
-  summary: {
+  orderSummaryContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    marginBottom: 15,
-    paddingHorizontal: 15,
+    marginBottom: 10,
   },
-  totalAmount: {
-    fontFamily: "open-sans-bold",
+  buttonContainer: {},
+  price: {
+    color: Colors.primary,
     fontSize: 16,
+    fontFamily: "open-sans-bold",
   },
   date: {
-    fontSize: 16,
+    color: Colors.text,
     fontFamily: "open-sans",
-    color: "#888",
   },
   detailItems: {
     width: "100%",

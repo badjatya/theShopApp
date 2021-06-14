@@ -1,28 +1,22 @@
 import React, { useState } from "react";
 
-// TODO: Importing for Fonts
+// TODO: importing Navigation
+import Navigation from "./App/navigation/Navigation";
+
+// TODO: Importing redux
+import { combineReducers, createStore } from "redux";
+import { Provider } from "react-redux";
+
+// TODO: Importing Reducers
+import productReducer from "./App/store/reducers/product.reducer";
+import cartReducer from "./App/store/reducers/cart.reducer";
+import orderReducer from "./App/store/reducers/order.reducer";
+
+// TODO: Importing Fonts
 import * as Fonts from "expo-font";
 import AppLoading from "expo-app-loading";
 
-// TODO: Importing Navigation
-import Navigation from "./App/navigation/Navigation";
-
-// TODO: importing Reducers
-import { createStore, combineReducers } from "redux";
-import { Provider } from "react-redux";
-import productReducer from "./App/store/reducers/product.reducer";
-import cartReducer from "./App/store/reducers/cart.reducer";
-import ordersReducer from "./App/store/reducers/order.reducer";
-
-// TODO: Combining reducer and creating redux store
-const rootReducer = combineReducers({
-  products: productReducer,
-  cart: cartReducer,
-  orders: ordersReducer,
-});
-const store = createStore(rootReducer);
-
-// NOTE Fetching fonts
+// Fetching Fonts
 const fetchFonts = () => {
   return Fonts.loadAsync({
     "open-sans": require("./App/assets/fonts/OpenSans-Regular.ttf"),
@@ -30,8 +24,17 @@ const fetchFonts = () => {
   });
 };
 
-// TODO Main App Screen
-const App = () => {
+// Combing Reducer and creating Store
+const rootReducer = combineReducers({
+  products: productReducer,
+  cart: cartReducer,
+  orders: orderReducer,
+});
+
+const store = createStore(rootReducer);
+
+export default function App() {
+  // font state
   const [fontLoaded, setFontLoaded] = useState(false);
 
   if (!fontLoaded) {
@@ -39,7 +42,7 @@ const App = () => {
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
-        onError={(err) => alert(err)}
+        onError={(error) => console.log(error)}
       />
     );
   }
@@ -49,6 +52,4 @@ const App = () => {
       <Navigation />
     </Provider>
   );
-};
-
-export default App;
+}

@@ -1,18 +1,15 @@
 import React from "react";
-import { StyleSheet, Button, View, FlatList, Alert } from "react-native";
+import { StyleSheet, Alert, View, FlatList } from "react-native";
 
 // TODO: Importing redux store
 import { useSelector, useDispatch } from "react-redux";
 import * as productsActions from "../../../store/actions/product.action";
 
-// TODO: Importing Component
+// TODO: Importing Components
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
+import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 
 const UserProductsScreen = (props) => {
-  // Navigation
-  const { navigation } = props;
-
-  // TODO:  Importing data from redux store state
   const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 
@@ -38,23 +35,23 @@ const UserProductsScreen = (props) => {
             title={itemData.item.title}
             price={itemData.item.price}
             onSelect={() =>
-              navigation.push("Edit Product", {
+              props.navigation.push("Edit Products", {
                 productId: itemData.item.id,
               })
             }
           >
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 title="Edit"
-                onPress={() =>
-                  navigation.push("Edit Product", {
+                onClick={() =>
+                  props.navigation.push("Edit Products", {
                     productId: itemData.item.id,
                   })
                 }
               />
-              <Button
+              <CustomButton
                 title="Delete"
-                onPress={() => deleteProductHandler(itemData.item.id)}
+                onClick={() => deleteProductHandler(itemData.item.id)}
               />
             </View>
           </ProductItem>

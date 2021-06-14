@@ -1,11 +1,14 @@
+// TODO: Importing Actions
 import { ADD_ORDER } from "../actions/order.action";
-import Order from "../../models/Order";
+
+// TODO: Importing model Order
+import Order from "../../models/orders.model";
 
 const initialState = {
   orders: [],
 };
 
-export default (state = initialState, action) => {
+const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ORDER:
       const newOrder = new Order(
@@ -22,3 +25,5 @@ export default (state = initialState, action) => {
 
   return state;
 };
+
+export default orderReducer;

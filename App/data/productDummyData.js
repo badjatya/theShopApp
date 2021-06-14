@@ -1,5 +1,7 @@
-import Product from "../models/Product";
+// Importing Product Model
+import Product from "../models/product.model";
 
+// Products Dummy Data
 const PRODUCTS = [
   new Product(
     "p1",

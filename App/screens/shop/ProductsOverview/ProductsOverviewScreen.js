@@ -1,28 +1,24 @@
 import React from "react";
-import { View, FlatList, StatusBar, Button } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 
-// TODO: Importing Reducer
+// TODO: Importing Products data from redux
 import { useSelector, useDispatch } from "react-redux";
-
-// TODO: Importing actions
-import * as CartActions from "../../../store/actions/cart.action";
+import * as cartActions from "../../../store/actions/cart.action";
 
 // TODO: Importing Components
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
+import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 
-// TODO: Importing styles
-import styles from "./style";
+// TODO: Importing Colors
+// import Colors from "../../../constants/Colors";
 
-//TODO: Importing Colors
-import Colors from "../../../constants/Colors";
-
-// NOTE: Main Screen i.e ProductsOverviewScreen
 const ProductsOverviewScreen = (props) => {
+  const { navigation } = props;
   const products = useSelector((state) => state.products.availableProducts);
+
   const dispatch = useDispatch();
   return (
     <View>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.primary} />
       <FlatList
         data={products}
         renderItem={(itemData) => (
@@ -31,25 +27,25 @@ const ProductsOverviewScreen = (props) => {
             title={itemData.item.title}
             price={itemData.item.price}
             onSelect={() =>
-              props.navigation.push("Product Details", {
+              navigation.push("Product Details", {
                 productId: itemData.item.id,
                 productTitle: itemData.item.title,
               })
             }
           >
             <View style={styles.buttonContainer}>
-              <Button
+              <CustomButton
                 title="View Detail"
-                onPress={() =>
-                  props.navigation.push("Product Details", {
+                onClick={() =>
+                  navigation.push("Product Details", {
                     productId: itemData.item.id,
                     productTitle: itemData.item.title,
                   })
                 }
               />
-              <Button
+              <CustomButton
                 title="Add To Cart"
-                onPress={() => dispatch(CartActions.addToCart(itemData.item))}
+                onClick={() => dispatch(cartActions.addToCart(itemData.item))}
               />
             </View>
           </ProductItem>
@@ -60,3 +56,13 @@ const ProductsOverviewScreen = (props) => {
 };
 
 export default ProductsOverviewScreen;
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "25%",
+    paddingHorizontal: 20,
+  },
+});

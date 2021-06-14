@@ -1,23 +1,21 @@
-// TODO: Importing Products Data
-import PRODUCTS from "../../data/dummy-product-data";
+// Importing Products dummy data
+import PRODUCTS from "../../data/productDummyData";
 
-// TODO: Importing actions
+// Importing actions
 import {
-  DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
+  DELETE_PRODUCT,
 } from "../actions/product.action";
 
 // TODO: Importing Models
-import Product from "../../models/Product";
+import Product from "../../models/product.model";
 
-// NOTE Initial State for reducer
 const initialState = {
   availableProducts: PRODUCTS,
   userProducts: PRODUCTS.filter((product) => product.ownerId === "u1"),
 };
 
-// NOTE ProductReducer
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_PRODUCT:
@@ -44,7 +42,8 @@ const productReducer = (state = initialState, action) => {
         action.productData.title,
         action.productData.imageUrl,
         action.productData.description,
-        state.userProducts[productIndex].price
+        action.productData.price
+        // state.userProducts[productIndex].price
       );
       const updatedUserProducts = [...state.userProducts];
       updatedUserProducts[productIndex] = updatedProduct;

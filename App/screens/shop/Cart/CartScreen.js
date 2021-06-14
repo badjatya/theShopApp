@@ -1,20 +1,21 @@
 import React from "react";
-import { View, Text, FlatList, Button, StyleSheet } from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
 
-// TODO: Importing Redux
+// TODO: Importing redux store
 import { useSelector, useDispatch } from "react-redux";
 
-// TODO: Importing actions
+// TODO: Importing cart actions
 import * as cartActions from "../../../store/actions/cart.action";
-import * as ordersActions from "../../../store/actions/order.action";
+import * as orderActions from "../../../store/actions/order.action";
 
 // TODO: Importing Components
+import Card from "../../../components/UI/Card/Card";
+import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 import CartItem from "../../../components/shop/CartItem/CartItem";
 
 // TODO: Importing Colors
 import Colors from "../../../constants/Colors";
 
-// NOTE CartScreen
 const CartScreen = () => {
   // Using data from state and converting Object to array so that we can use FlatList
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
@@ -25,6 +26,7 @@ const CartScreen = () => {
         productId: key,
         productTitle: state.cart.items[key].productTitle,
         productPrice: state.cart.items[key].productPrice,
+        productImageUrl: state.cart.items[key].productImageUrl,
         quantity: state.cart.items[key].quantity,
         sum: state.cart.items[key].sum,
       });
@@ -34,33 +36,38 @@ const CartScreen = () => {
     );
   });
 
-  // Using dispatch for removing the items from cart
   const dispatch = useDispatch();
 
-  // Rendering CartScreen
   return (
-    <View style={styles.screen}>
-      <View style={styles.summary}>
-        <Text style={styles.summaryText}>
-          Total: <Text style={styles.amount}>₹ {cartTotalAmount}</Text>
-        </Text>
-        <Button
-          color={Colors.accent}
-          title="Order Now"
-          disabled={cartItems.length === 0}
-          onPress={() =>
-            dispatch(ordersActions.addOrder(cartItems, cartTotalAmount))
-          }
-        />
-      </View>
+    <View style={{ marginBottom: 50 }}>
+      <Card style={styles.card}>
+        <View style={styles.summary}>
+          <Text style={styles.total}>
+            Total: <Text style={styles.price}>₹ {cartTotalAmount}</Text>
+          </Text>
+          <CustomButton
+            title="Order Now"
+            onClick={() =>
+              dispatch(orderActions.addOrder(cartItems, cartTotalAmount))
+            }
+            disabled={cartItems.length === 0}
+          />
+        </View>
+      </Card>
 
-      {/* Using CartItem component in FlatList */}
+      {/* Using cartItems converted array to render cartItems  */}
+
       <FlatList
+        style={{ marginBottom: 50 }}
         data={cartItems}
         keyExtractor={(item) => item.productId}
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
         renderItem={(itemData) => (
           <CartItem
             quantity={itemData.item.quantity}
+            imageUrl={itemData.item.productImageUrl}
             title={itemData.item.productTitle}
             amount={itemData.item.sum}
             deleteIconEnabled
@@ -74,31 +81,24 @@ const CartScreen = () => {
   );
 };
 
+export default CartScreen;
+
 const styles = StyleSheet.create({
-  screen: {
+  card: {
     margin: 20,
+    padding: 10,
   },
   summary: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 20,
-    padding: 10,
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
+    alignItems: "center",
   },
-  summaryText: {
-    fontFamily: "open-sans-bold",
+  total: {
+    fontFamily: "open-sans",
     fontSize: 18,
   },
-  amount: {
+  price: {
+    fontFamily: "open-sans-bold",
     color: Colors.primary,
   },
 });
-
-export default CartScreen;
