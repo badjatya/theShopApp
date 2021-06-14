@@ -6,6 +6,7 @@ import {
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_PRODUCT,
+  SET_PRODUCTS,
 } from "../actions/product.action";
 
 // TODO: Importing Models
@@ -18,6 +19,12 @@ const initialState = {
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
+    // Setting products from server i.e firebase
+    case SET_PRODUCTS:
+      return {
+        availableProducts: action.products,
+        userProducts: action.products.filter((prod) => prod.ownerId === "u1"),
+      };
     case CREATE_PRODUCT:
       const newProduct = new Product(
         action.productData.id,

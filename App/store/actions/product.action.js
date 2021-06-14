@@ -1,6 +1,38 @@
+// TODO: Importing Product Model
+import Product from "../../models/product.model";
+
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const SET_PRODUCTS = "SET_PRODUCTS";
+
+// Fetching Products from firebase
+export const fetchProducts = () => {
+  return async (dispatch) => {
+    // any async code you want!
+    const response = await fetch(
+      "https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
+    );
+
+    const resData = await response.json();
+    const loadedProducts = [];
+
+    for (const key in resData) {
+      loadedProducts.push(
+        new Product(
+          key,
+          "u1",
+          resData[key].title,
+          resData[key].imageUrl,
+          resData[key].description,
+          resData[key].price
+        )
+      );
+    }
+
+    dispatch({ type: SET_PRODUCTS, products: loadedProducts });
+  };
+};
 
 export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch) => {

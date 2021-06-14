@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
 // TODO: Importing Products data from redux
 import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from "../../../store/actions/cart.action";
+import * as productsActions from "../../../store/actions/product.action";
 
 // TODO: Importing Components
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
@@ -17,6 +18,12 @@ const ProductsOverviewScreen = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
 
   const dispatch = useDispatch();
+
+  // Fetching Products from server to display on screen
+  useEffect(() => {
+    dispatch(productsActions.fetchProducts());
+  }, [dispatch]);
+
   return (
     <View>
       <FlatList
