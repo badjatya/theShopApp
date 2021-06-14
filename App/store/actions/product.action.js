@@ -3,14 +3,37 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return {
-    type: CREATE_PRODUCT,
-    productData: {
-      title,
-      description,
-      imageUrl,
-      price,
-    },
+  return async (dispatch) => {
+    // Posting products to server
+    const response = await fetch(
+      "https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/products.json",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          imageUrl,
+          price,
+        }),
+      }
+    );
+
+    const resData = await response.json();
+
+    // Now this will execute after the product is fetched
+    dispatch({
+      type: CREATE_PRODUCT,
+      productData: {
+        id: resData.name,
+        title,
+        description,
+        imageUrl,
+        price,
+      },
+    });
   };
 };
 
