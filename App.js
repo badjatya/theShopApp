@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import Navigation from "./App/navigation/Navigation";
 
 // TODO: Importing redux
-import { combineReducers, createStore } from "redux";
+import { combineReducers, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+// Importing Redux Thunk
+import ReduxThunk from "redux-thunk";
 
 // TODO: Importing Reducers
 import productReducer from "./App/store/reducers/product.reducer";
@@ -31,7 +33,7 @@ const rootReducer = combineReducers({
   orders: orderReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 export default function App() {
   // font state
