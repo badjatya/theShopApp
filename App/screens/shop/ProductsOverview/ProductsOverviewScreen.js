@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  ActivityIndicator,
+  Text,
+} from "react-native";
 
 // TODO: Importing Products data from redux
 import { useSelector, useDispatch } from "react-redux";
@@ -32,10 +38,22 @@ const ProductsOverviewScreen = (props) => {
     loadProducts();
   }, [dispatch]);
 
+  // For loading spinner
   if (isLoading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  // For if no data is found
+  if (!isLoading && products.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.centeredText}>
+          No Products, please add from admin section
+        </Text>
       </View>
     );
   }
@@ -92,5 +110,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  centeredText: {
+    color: Colors.primary,
+    fontFamily: "open-sans",
+    fontSize: 15,
   },
 });
