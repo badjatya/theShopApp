@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
 
 // TODO: Importing Products data from redux
 import { useSelector, useDispatch } from "react-redux";
@@ -11,18 +11,34 @@ import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 
 // TODO: Importing Colors
-// import Colors from "../../../constants/Colors";
+import Colors from "../../../constants/Colors";
 
 const ProductsOverviewScreen = (props) => {
   const { navigation } = props;
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const products = useSelector((state) => state.products.availableProducts);
 
   const dispatch = useDispatch();
 
   // Fetching Products from server to display on screen
   useEffect(() => {
-    dispatch(productsActions.fetchProducts());
+    const loadProducts = async () => {
+      setIsLoading(true);
+      await dispatch(productsActions.fetchProducts());
+      setIsLoading(false);
+    };
+    loadProducts();
   }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -71,5 +87,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "25%",
     paddingHorizontal: 20,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
