@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   Image,
+  ActivityIndicator,
 } from "react-native";
 
 // TODO: Importing redux store
@@ -29,6 +30,8 @@ const EditProductScreen = (props) => {
   const prodId = route.params.productId;
 
   // managing state
+  const [isLoading, setIsLoading] = useState(false);
+
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === prodId)
   );
@@ -43,9 +46,10 @@ const EditProductScreen = (props) => {
 
   // Adding a top save icon
   useEffect(() => {
-    const submitHandler = () => {
+    const submitHandler = async () => {
+      setIsLoading(true);
       if (editedProduct) {
-        dispatch(
+        await dispatch(
           productActions.updateProduct(
             prodId,
             title,
@@ -55,10 +59,11 @@ const EditProductScreen = (props) => {
           )
         );
       } else {
-        dispatch(
+        await dispatch(
           productActions.createProduct(title, description, imageUrl, +price)
         );
       }
+      setIsLoading(false);
 
       navigation.goBack();
     };
@@ -77,6 +82,15 @@ const EditProductScreen = (props) => {
       ),
     });
   }, [navigation, dispatch, prodId, title, description, imageUrl, price]);
+
+  // For loading spinner
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -158,5 +172,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingHorizontal: 2,
     paddingVertical: 3,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
