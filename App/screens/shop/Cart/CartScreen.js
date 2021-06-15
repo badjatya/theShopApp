@@ -1,5 +1,11 @@
-import React from "react";
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 
 // TODO: Importing redux store
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +23,9 @@ import CartItem from "../../../components/shop/CartItem/CartItem";
 import Colors from "../../../constants/Colors";
 
 const CartScreen = () => {
+  // For loading spinner
+  const [isLoading, setIsLoading] = useState(false);
+
   // Using data from state and converting Object to array so that we can use FlatList
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const cartItems = useSelector((state) => {
@@ -38,6 +47,13 @@ const CartScreen = () => {
 
   const dispatch = useDispatch();
 
+  // set order function
+  const setOrder = async () => {
+    setIsLoading(true);
+    await dispatch(orderActions.addOrder(cartItems, cartTotalAmount));
+    setIsLoading(false);
+  };
+
   return (
     <View style={{ marginBottom: 50 }}>
       <Card style={styles.card}>
@@ -45,13 +61,15 @@ const CartScreen = () => {
           <Text style={styles.total}>
             Total: <Text style={styles.price}>₹ {cartTotalAmount}</Text>
           </Text>
-          <CustomButton
-            title="Order Now"
-            onClick={() =>
-              dispatch(orderActions.addOrder(cartItems, cartTotalAmount))
-            }
-            disabled={cartItems.length === 0}
-          />
+          {isLoading ? (
+            <ActivityIndicator size="large" color={Colors.primary} />
+          ) : (
+            <CustomButton
+              title="Order Now"
+              onClick={setOrder}
+              disabled={cartItems.length === 0}
+            />
+          )}
         </View>
       </Card>
 

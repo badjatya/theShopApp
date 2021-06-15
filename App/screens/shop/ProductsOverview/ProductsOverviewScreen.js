@@ -39,14 +39,7 @@ const ProductsOverviewScreen = (props) => {
 
   // if an item is changed on server than we need to refetch it
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener(
-      "willFocus",
-      loadProducts
-    );
-
-    return () => {
-      willFocusSub.remove();
-    };
+    props.navigation.addListener("willFocus", loadProducts);
   }, [loadProducts]);
 
   // Fetching Products from server to display on screen
