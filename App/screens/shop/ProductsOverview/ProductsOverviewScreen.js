@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -28,15 +28,31 @@ const ProductsOverviewScreen = (props) => {
 
   const dispatch = useDispatch();
 
+  // Fetching Products from server to display on screen -- its functions
+  const loadProducts = useCallback(async () => {
+    setIsLoading(true);
+
+    await dispatch(productsActions.fetchProducts());
+
+    setIsLoading(false);
+  }, [dispatch, setIsLoading]);
+
+  // if an item is changed on server than we need to refetch it
+  useEffect(() => {
+    const willFocusSub = props.navigation.addListener(
+      "willFocus",
+      loadProducts
+    );
+
+    return () => {
+      willFocusSub.remove();
+    };
+  }, [loadProducts]);
+
   // Fetching Products from server to display on screen
   useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-      await dispatch(productsActions.fetchProducts());
-      setIsLoading(false);
-    };
     loadProducts();
-  }, [dispatch]);
+  }, [dispatch, loadProducts]);
 
   // For loading spinner
   if (isLoading) {
