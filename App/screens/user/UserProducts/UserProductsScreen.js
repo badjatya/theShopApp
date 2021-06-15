@@ -1,5 +1,11 @@
-import React from "react";
-import { StyleSheet, Alert, View, FlatList } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Alert,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 
 // TODO: Importing redux store
 import { useSelector, useDispatch } from "react-redux";
@@ -9,13 +15,18 @@ import * as productsActions from "../../../store/actions/product.action";
 import ProductItem from "../../../components/shop/ProductItem/ProductItem";
 import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 
+// TODO: Importing Colors
+import Colors from "../../../constants/Colors";
+
 const UserProductsScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 
   // delete products function
-  const deleteProductHandler = (id) => {
-    Alert.alert("Are You Sure?", "You want to delete this item?", [
+  const deleteProductHandler = async (id) => {
+    setIsLoading(true);
+    await Alert.alert("Are You Sure?", "You want to delete this item?", [
       { text: "No", style: "default" },
       {
         text: "Yes",
@@ -23,7 +34,17 @@ const UserProductsScreen = (props) => {
         onPress: () => dispatch(productsActions.deleteProduct(id)),
       },
     ]);
+    setIsLoading(false);
   };
+
+  // For loading spinner
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -70,5 +91,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "25%",
     paddingHorizontal: 20,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
