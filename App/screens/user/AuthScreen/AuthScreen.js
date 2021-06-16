@@ -20,11 +20,7 @@ import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 
 const AuthScreen = () => {
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={50}
-      style={styles.screen}
-    >
+    <View style={styles.screen}>
       <LinearGradient
         colors={[Colors.primary, Colors.white]}
         // start={[0.5, 0.5]}
@@ -39,7 +35,7 @@ const AuthScreen = () => {
           <View>
             <Input
               id="email"
-              label="E-Mail"
+              label="E-mail"
               keyboardType="email-address"
               required
               email
@@ -70,7 +66,7 @@ const AuthScreen = () => {
           </View>
         </Card>
       </LinearGradient>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
