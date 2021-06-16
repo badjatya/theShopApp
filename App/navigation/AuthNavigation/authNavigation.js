@@ -15,7 +15,13 @@ const AuthStackNavigator = createStackNavigator();
 const AuthStackNavigatorScreen = () => {
   return (
     <AuthStackNavigator.Navigator>
-      <AuthStackNavigator.Screen name="Auth" component={AuthScreen} />
+      <AuthStackNavigator.Screen
+        name="Auth"
+        component={AuthScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <AuthStackNavigator.Screen
         name="Shop"
         component={DrawerNavigatorScreen}
