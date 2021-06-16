@@ -22,6 +22,7 @@ import Colors from "../../../constants/Colors";
 const ProductsOverviewScreen = (props) => {
   const { navigation } = props;
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const products = useSelector((state) => state.products.availableProducts);
@@ -30,11 +31,9 @@ const ProductsOverviewScreen = (props) => {
 
   // Fetching Products from server to display on screen -- its functions
   const loadProducts = useCallback(async () => {
-    setIsLoading(true);
-
+    setIsRefreshing(true);
     await dispatch(productsActions.fetchProducts());
-
-    setIsLoading(false);
+    setIsRefreshing(false);
   }, [dispatch, setIsLoading]);
 
   // if an item is changed on server than we need to refetch it
@@ -71,6 +70,8 @@ const ProductsOverviewScreen = (props) => {
     <View>
       <FlatList
         data={products}
+        onRefresh={loadProducts}
+        refreshing={isRefreshing}
         renderItem={(itemData) => (
           <ProductItem
             imageUrl={itemData.item.imageUrl}
