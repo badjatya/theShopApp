@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingHorizontal: 2,
-    paddingVertical: 5,
+    paddingVertical: 3,
     borderBottomColor: Colors.primary,
     borderBottomWidth: 1,
   },
