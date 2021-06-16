@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Image,
+} from "react-native";
 
 // TODO: Importing Expo Linear Gradient
 import { LinearGradient } from "expo-linear-gradient";
@@ -25,6 +31,10 @@ const AuthScreen = () => {
         // end={[0.1, 0.3]}
         style={styles.keyboard}
       >
+        <Image
+          style={styles.image}
+          source={require("../../../assets/images/logo.png")}
+        />
         <Card style={styles.authContainer}>
           <View>
             <Input
@@ -74,6 +84,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  image: {
+    width: "80%",
+    height: 250,
   },
   authContainer: {
     width: "80%",
