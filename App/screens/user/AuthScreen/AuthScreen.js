@@ -1,6 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
 
+// TODO: Importing Expo Linear Gradient
+import { LinearGradient } from "expo-linear-gradient";
+
+// TODO: Importing Colors
+import Colors from "../../../constants/Colors";
+
 // TODO: Importing Components
 import Card from "../../../components/UI/Card/Card";
 import Input from "../../../components/UI/Input/Input";
@@ -8,8 +14,17 @@ import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 
 const AuthScreen = () => {
   return (
-    <View style={styles.screen}>
-      <KeyboardAvoidingView style={styles.keyboard}>
+    <KeyboardAvoidingView
+      behavior="padding"
+      keyboardVerticalOffset={50}
+      style={styles.screen}
+    >
+      <LinearGradient
+        colors={[Colors.primary, Colors.white]}
+        // start={[0.5, 0.5]}
+        // end={[0.1, 0.3]}
+        style={styles.keyboard}
+      >
         <Card style={styles.authContainer}>
           <View>
             <Input
@@ -44,8 +59,8 @@ const AuthScreen = () => {
             </Text>
           </View>
         </Card>
-      </KeyboardAvoidingView>
-    </View>
+      </LinearGradient>
+    </KeyboardAvoidingView>
   );
 };
 
