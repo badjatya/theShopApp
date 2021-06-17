@@ -7,24 +7,33 @@ import { createStackNavigator } from "@react-navigation/stack";
 import DrawerNavigatorScreen from "../DrawerNavigation/drawerNavigation";
 
 // TODO: Importing Screens
-import AuthScreen from "../../screens/user/AuthScreen/AuthScreen";
+import SignUpScreen from "../../screens/user/SignUp/SignUpScreen";
+import LoginScreen from "../../screens/user/Login/LoginScreen";
 
 // AuthStackNavigator
 const AuthStackNavigator = createStackNavigator();
 
 const AuthStackNavigatorScreen = () => {
   return (
-    <AuthStackNavigator.Navigator>
+    <AuthStackNavigator.Navigator initialRouteName={SignUpScreen}>
       <AuthStackNavigator.Screen
-        name="Auth"
-        component={AuthScreen}
+        name="SignUp"
+        component={SignUpScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <AuthStackNavigator.Screen
+        name="Shop"
+        component={DrawerNavigatorScreen}
         options={{
           headerShown: false,
         }}
       />
       <AuthStackNavigator.Screen
-        name="Shop"
-        component={DrawerNavigatorScreen}
+        name="Login"
+        component={LoginScreen}
         options={{
           headerShown: false,
         }}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Image, TextInput, Alert } from "react-native";
 
 // TODO: Importing Expo Linear Gradient
@@ -14,42 +14,12 @@ import Colors from "../../../constants/Colors";
 import Card from "../../../components/UI/Card/Card";
 import CustomButton from "../../../components/UI/CustomButton/CustomButton";
 
-const AuthScreen = (props) => {
+const LoginScreen = (props) => {
   const { navigation } = props;
 
   // State
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const emptyState = () => {
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-  };
-
-  const handlePress = () => {
-    if (!firstName) {
-      Alert.alert("First name is required");
-    } else if (!email) {
-      Alert.alert("Email field is required.");
-    } else if (!password) {
-      Alert.alert("Password field is required.");
-    } else if (!confirmPassword) {
-      setPassword("");
-      Alert.alert("Confirm password field is required.");
-    } else if (password !== confirmPassword) {
-      Alert.alert("Password does not match!");
-    } else {
-      registration(email, password, lastName, firstName);
-      navigation.navigate("Shop");
-      emptyState();
-    }
-  };
 
   return (
     <View style={styles.screen}>
@@ -65,24 +35,6 @@ const AuthScreen = (props) => {
         />
         <Card style={styles.authContainer}>
           <View>
-            <View style={styles.formControl}>
-              <Text style={styles.label}>First Name</Text>
-              <TextInput
-                style={styles.textInput}
-                value={firstName}
-                onChangeText={(inputText) => setFirstName(inputText)}
-              />
-            </View>
-
-            <View style={styles.formControl}>
-              <Text style={styles.label}>Last Name</Text>
-              <TextInput
-                style={styles.textInput}
-                value={lastName}
-                onChangeText={(inputText) => setLastName(inputText)}
-              />
-            </View>
-
             <View style={styles.formControl}>
               <Text style={styles.label}>E-mail</Text>
               <TextInput
@@ -101,20 +53,11 @@ const AuthScreen = (props) => {
               />
             </View>
 
-            <View style={styles.formControl}>
-              <Text style={styles.label}>Confirm Password</Text>
-              <TextInput
-                style={styles.textInput}
-                value={confirmPassword}
-                onChangeText={(inputText) => setConfirmPassword(inputText)}
-              />
-            </View>
-
             <View style={styles.buttonContainer}>
-              <CustomButton title="Sign Up" onClick={handlePress} />
+              <CustomButton title="Login" onClick={() => alert("Login")} />
             </View>
-            <Text style={styles.buttonText} onPress={() => alert("Login")}>
-              Already have an account? Login
+            <Text style={styles.buttonText} onPress={() => alert("Hi")}>
+              Don't have an account? Sign Up
             </Text>
           </View>
         </Card>
@@ -123,7 +66,7 @@ const AuthScreen = (props) => {
   );
 };
 
-export default AuthScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   screen: {
