@@ -3,7 +3,7 @@ export const SIGNUP = "SIGNUP";
 export const signup = (email, password) => {
   return async (dispatch) => {
     const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyBDGhG61BoBfVlYCmxShdeaXlhW5h1fEco",
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBY8UJq_xLD0nEe1HZHuvEOUfYIS9gg4pA",
       {
         method: "POST",
         headers: {
@@ -21,11 +21,8 @@ export const signup = (email, password) => {
       throw new Error("Something went wrong!");
     }
 
-    const resData = response.json();
+    const resData = await response.json();
     console.log(resData);
-
-    dispatch({
-      type: signup,
-    });
+    dispatch({ type: SIGNUP });
   };
 };
