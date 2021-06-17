@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Image, TextInput, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 // TODO: Importing firebase auth
-import { registration } from "../../../../API/firebaseMethods";
+import { signIn } from "../../../../API/firebaseMethods";
 
 // TODO: Importing Colors
 import Colors from "../../../constants/Colors";
@@ -20,6 +20,21 @@ const LoginScreen = (props) => {
   // State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handlePress = () => {
+    if (!email) {
+      Alert.alert("Email field is required.");
+    }
+
+    if (!password) {
+      Alert.alert("Password field is required.");
+    }
+
+    signIn(email, password);
+    setEmail("");
+    setPassword("");
+    navigation.push("Shop");
+  };
 
   return (
     <View style={styles.screen}>
@@ -54,9 +69,9 @@ const LoginScreen = (props) => {
             </View>
 
             <View style={styles.buttonContainer}>
-              <CustomButton title="Login" onClick={() => alert("Login")} />
+              <CustomButton title="Login" onClick={handlePress} />
             </View>
-            <Text style={styles.buttonText} onPress={() => alert("Hi")}>
+            <Text style={styles.buttonText} onPress={() => navigation.goBack()}>
               Don't have an account? Sign Up
             </Text>
           </View>
