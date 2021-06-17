@@ -26,24 +26,18 @@ const SignUpScreen = (props) => {
   const { navigation } = props;
 
   // State
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // const emptyState = () => {
-  //   setFirstName("");
-  //   setLastName("");
-  //   setEmail("");
-  //   setPassword("");
-  //   setConfirmPassword("");
-  // };
+  const emptyState = () => {
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
 
   const handlePress = () => {
-    if (!firstName) {
-      Alert.alert("First name is required");
-    } else if (!email) {
+    if (!email) {
       Alert.alert("Email field is required.");
     } else if (!password) {
       Alert.alert("Password field is required.");
@@ -53,9 +47,9 @@ const SignUpScreen = (props) => {
     } else if (password !== confirmPassword) {
       Alert.alert("Password does not match!");
     } else {
-      registration(email, password, lastName, firstName);
+      registration(email, password);
       navigation.navigate("Shop");
-      // emptyState();
+      emptyState();
     }
   };
 
@@ -91,10 +85,19 @@ const SignUpScreen = (props) => {
               />
             </View>
 
+            <View style={styles.formControl}>
+              <Text style={styles.label}>Confirm Password</Text>
+              <TextInput
+                style={styles.textInput}
+                value={confirmPassword}
+                onChangeText={(inputText) => setConfirmPassword(inputText)}
+              />
+            </View>
+
             <View style={styles.buttonContainer}>
               <CustomButton title="Sign Up" onClick={handlePress} />
             </View>
-            <TouchableOpacity onPress={navigation.push("Login")}>
+            <TouchableOpacity onPress={() => navigation.push("Login")}>
               <Text style={styles.buttonText}>
                 Already have an account? Login
               </Text>
