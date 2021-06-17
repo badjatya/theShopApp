@@ -25,6 +25,9 @@ const AuthStackNavigatorScreen = () => {
       <AuthStackNavigator.Screen
         name="Shop"
         component={DrawerNavigatorScreen}
+        options={{
+          headerShown: false,
+        }}
       />
     </AuthStackNavigator.Navigator>
   );
