@@ -18,6 +18,10 @@ import orderReducer from "./App/store/reducers/order.reducer";
 import * as Fonts from "expo-font";
 import AppLoading from "expo-app-loading";
 
+// TODO: Importing firebase
+import * as firebase from "firebase";
+import apiKeys from "./config/keys";
+
 // Fetching Fonts
 const fetchFonts = () => {
   return Fonts.loadAsync({
@@ -47,6 +51,11 @@ export default function App() {
         onError={(error) => console.log(error)}
       />
     );
+  }
+
+  if (!firebase.apps.length) {
+    console.log("Connected with Firebase");
+    firebase.initializeApp(apiKeys.firebaseConfig);
   }
 
   return (
