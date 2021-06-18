@@ -1,3 +1,7 @@
+// Importing firebase
+import * as firebase from "firebase";
+let currentUserUID = firebase.auth().currentUser.uid;
+
 // TODO: Importing Product Model
 import Product from "../../models/product.model";
 
@@ -9,6 +13,7 @@ export const SET_PRODUCTS = "SET_PRODUCTS";
 // Fetching Products from firebase
 export const fetchProducts = () => {
   return async (dispatch) => {
+    let currentUserUID = firebase.auth().currentUser.uid;
     // any async code you want!
     const response = await fetch(
       "https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
@@ -30,12 +35,17 @@ export const fetchProducts = () => {
       );
     }
 
-    dispatch({ type: SET_PRODUCTS, products: loadedProducts });
+    dispatch({
+      type: SET_PRODUCTS,
+      products: loadedProducts,
+      userProducts: loadedProducts.filter(prod.ownerId === currentUserUID),
+    });
   };
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch) => {
+    let currentUserUID = firebase.auth().currentUser.uid;
     // Posting products to server
     const response = await fetch(
       "https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/products.json",
@@ -49,6 +59,7 @@ export const createProduct = (title, description, imageUrl, price) => {
           description,
           imageUrl,
           price,
+          ownerId: currentUserUID,
         }),
       }
     );
@@ -64,6 +75,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price,
+        ownerId: currentUserUID,
       },
     });
   };

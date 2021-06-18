@@ -1,3 +1,7 @@
+// Importing firebase
+import * as firebase from "firebase";
+let currentUserUID = firebase.auth().currentUser.uid;
+
 // Importing Products dummy data
 import PRODUCTS from "../../data/productDummyData";
 
@@ -13,8 +17,8 @@ import {
 import Product from "../../models/product.model";
 
 const initialState = {
-  availableProducts: PRODUCTS,
-  userProducts: PRODUCTS.filter((product) => product.ownerId === "u1"),
+  availableProducts: [],
+  userProducts: [],
 };
 
 const productReducer = (state = initialState, action) => {
@@ -23,12 +27,12 @@ const productReducer = (state = initialState, action) => {
     case SET_PRODUCTS:
       return {
         availableProducts: action.products,
-        userProducts: action.products.filter((prod) => prod.ownerId === "u1"),
+        userProducts: action.userProducts,
       };
     case CREATE_PRODUCT:
       const newProduct = new Product(
         action.productData.id,
-        "u1",
+        action.productData.ownerId,
         action.productData.title,
         action.productData.imageUrl,
         action.productData.description,

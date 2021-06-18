@@ -1,3 +1,7 @@
+// Importing firebase
+import * as firebase from "firebase";
+// let currentUserUID = firebase.auth().currentUser.uid;
+
 // TODO: Importing Order Model
 import Order from "../../models/orders.model";
 
@@ -6,8 +10,9 @@ export const SET_ORDER = "SET_ORDER";
 
 export const fetchOrders = () => {
   return async (dispatch) => {
+    let currentUserUID = firebase.auth().currentUser.uid;
     const response = await fetch(
-      "https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/orders/u1.json"
+      `https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${currentUserUID}.json`
     );
 
     const resData = await response.json();
@@ -34,10 +39,10 @@ export const fetchOrders = () => {
 export const addOrder = (cartItems, totalAmount) => {
   return async (dispatch) => {
     const date = new Date();
-
+    let currentUserUID = firebase.auth().currentUser.uid;
     // Posting orders to server
     const response = await fetch(
-      "https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/orders/u1.json",
+      `https://theshopapp-24f57-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${currentUserUID}.json`,
       {
         method: "POST",
         headers: {
