@@ -1,3 +1,4 @@
+// TODO: Importing firebase
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { Alert } from "react-native";
@@ -16,9 +17,13 @@ export async function registration(email, password) {
   }
 }
 
-export async function signIn(email, password) {
+export async function signIn(email, password, navigation) {
   try {
     await firebase.auth().signInWithEmailAndPassword(email, password);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Shop" }],
+    });
   } catch (err) {
     Alert.alert("There is something wrong!", err.message);
   }

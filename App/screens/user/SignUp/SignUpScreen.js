@@ -48,7 +48,11 @@ const SignUpScreen = (props) => {
       Alert.alert("Password does not match!");
     } else {
       registration(email, password);
-      navigation.navigate("Shop");
+      // navigation.navigate("Shop");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Shop" }],
+      });
       emptyState();
     }
   };
