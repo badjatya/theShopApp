@@ -7,6 +7,7 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 
 // TODO: Importing Expo Linear Gradient
@@ -26,6 +27,7 @@ const SignUpScreen = (props) => {
   const { navigation } = props;
 
   // State
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -36,7 +38,7 @@ const SignUpScreen = (props) => {
     setConfirmPassword("");
   };
 
-  const handlePress = () => {
+  const handlePress = async () => {
     if (!email) {
       Alert.alert("Email field is required.");
     } else if (!password) {
@@ -47,15 +49,21 @@ const SignUpScreen = (props) => {
     } else if (password !== confirmPassword) {
       Alert.alert("Password does not match!");
     } else {
-      registration(email, password);
-      // navigation.navigate("Shop");
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Shop" }],
-      });
+      setIsLoading(true);
+      await registration(email, password, navigation);
+      setIsLoading(false);
       emptyState();
     }
   };
+
+  // For loading spinner
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.screen}>
@@ -154,5 +162,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingHorizontal: 2,
     paddingVertical: 3,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
